@@ -1,6 +1,8 @@
 {
   "name": "front-backend-test",
-  "engines": { "node" : ">=13.6" },
+  "engines": {
+    "node": ">=13.6"
+  },
   "version": "1.0.0",
   "description": "",
   "dependencies": {

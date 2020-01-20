@@ -2,14 +2,6 @@
 
 Telnet enabled drawing program full of awe and wonder.
 
-## Installation
-
-No dependencies on frameworks. No real reason why except that its fun! Installation is a cinch. Does require at least `node 13.6`.
-
-```
-npm install
-```
-
 ## Features
 
 - Robust draw modes
@@ -18,18 +10,25 @@ npm install
 - Multi-user support
 - CCPA + GDPR compliant
 
+## Installation
+
+Installation is a cinch. Does require at least `node 13.6` if running native. You could install via `nvm i 13.6` if you like. Or use the docker compose method for easy breezy installation.
+
 ## Quick Start
 
-The quickest way is to use run via docker.
+The quickest way to get up and running is via docker.
 
 ```
 docker-compose up
 ```
 
-Don't like docker? NO PROBLEM. Just run:
+Don't like docker? NO PROBLEM. Run natively via:
 
 ```
-npm start
+node -v # ensure it is 13.6 at least, if not install or use nvm i 13.6
+npm i -g nodemon # install nodemon to monitor for file changes
+npm install
+npm start:dev
 ```
 
 Don't have `npm`? Why not? Fine, whatever, run:
@@ -48,35 +47,31 @@ Supports an abundance of environment variables.
 - `ROWS` - defaults to 30
 - `COLS` - defaults to 30
 
-## Directions
-
-The cursor direction defaults to ↑.
-
-↑ ↗ → ↘ ↓ ↙ ← ↖
 
 ## Commands
 
 ### `steps n`
 Based on current brush direction and type, repeat steps `n` times.
 
-### `left n`
+### `left n` direction change
 
-Moves the current cursor direction to the left from the list above `n` times. Default 1.
+Changes the current cursor direction to the left from the list below `n` times. Default 1.
 
-### `right n`
+### `right n` direction change
 
-Moves the current cursor direction to the right from the list above `n` times. Default 1.
+Changes the current cursor direction to the right from the list below `n` times. Default 1.
 
 ### `hover`
-Set the brush mode to simply hover and not add or remove any glyps at position.
+
+Set the brush mode to hover and not add or remove any glyps at position.
 
 ### `draw`
 
-Set the brush mode to draw.
+Set the brush mode to draw. Which inserts a glyph at current position.
 
 ### `eraser`
 
-Set the brush mode to erase.
+Set the brush mode to erase. Which removes any glyph at current position.
 
 ### `coord`
 
@@ -93,3 +88,7 @@ Clears out the canvas of all glyphs.
 ### `quit`
 
 Exit or disconnect from the client session.
+
+## Directions
+
+The initial cursor direction defaults to ↑. You can cycle through directions by using the `left` and `right` commands. The directions are listed in the following order ↑ ↗ → ↘ ↓ ↙ ← ↖.
