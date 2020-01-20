@@ -78,7 +78,7 @@ class Canvas {
   */
   left (num = 1) {
     const rem = (this.brush.dir - parseInt(num)) % DIRECTIONS.length
-    this.brush.dir = (rem >= 0) ? Math.abs((this.brush.dir - parseInt(num)) % DIRECTIONS.length) : DIRECTIONS.length + rem
+    this.brush.dir = (rem >= 0) ? rem : DIRECTIONS.length + rem
   }
 
   /*
