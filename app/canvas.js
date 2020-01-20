@@ -47,7 +47,7 @@ class Canvas {
   */
   constructor (client) {
     this.client = client // set the client
-    this.grid = Array(CONFIG.ROWS).fill(CONFIG.BRUSH_EMPTY).map(i => Array(CONFIG.COLS).fill(CONFIG.BRUSH_EMPTY)) // fill the multi-dim array with spaces
+    this.grid = Array(CONFIG.ROWS).fill(CONFIG.BRUSH_EMPTY).map(i => Array(CONFIG.COLS).fill(CONFIG.BRUSH_EMPTY)) // fill the multi-dim array with empty brush
     this.buffer = '' // the grid buffer for this canvas
     this.brush = {
       dir: CONFIG.DEFAULT_BRUSH_DIR,
