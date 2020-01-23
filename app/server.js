@@ -20,11 +20,12 @@ class Server {
       client.write('hello\r\n') // say hello to client
 
       // create a new canvas for this client
-      const canvas = new CANVAS(client)
+      let canvas = new CANVAS(client)
 
       // once the client has exited, do any clean necessary
       client.on('end', () => {
         console.log('client', client.remoteAddress, 'disconnected')
+        canvas = undefined
       })
     })
 

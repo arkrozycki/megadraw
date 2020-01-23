@@ -21,8 +21,8 @@ const DIRECTIONS = [[0, 1], [1, 1], [1, 0], [1, -1], [0, -1], [-1, -1], [-1, 0],
 const DIRECTIONS_ARROWS = ['\u2191', '\u2197', '\u2192', '\u2198', '\u2193', '\u2199', '\u2190', '\u2196'] // used for console debug
 
 const CONFIG = {
-  COLS: process.env.COLS || 30, // use env variable or default to 30
-  ROWS: process.env.ROWS || 30, // use env variable or default to 30
+  COLS: parseInt(process.env.COLS) || 30, // use env variable or default to 30
+  ROWS: parseInt(process.env.ROWS) || 30, // use env variable or default to 30
   FRAME: { // stores the unicode characters for generating the canvas frame
     HORIZ: '\u2550',
     VERT: '\u2551',
@@ -47,8 +47,8 @@ class Canvas {
   */
   constructor (client) {
     this.client = client // set the client
-    this.grid = Array(CONFIG.ROWS).fill(CONFIG.BRUSH_EMPTY).map(i => Array(CONFIG.COLS).fill(CONFIG.BRUSH_EMPTY)) // fill the multi-dim array with empty brush
-    this.buffer = '' // the grid buffer for this canvas
+    this.grid = {} // object that stores glyphs and their positions
+    this.buffer = '' // the output buffer for this canvas
     this.brush = {
       dir: CONFIG.DEFAULT_BRUSH_DIR,
       mode: CONFIG.DEFAULT_BRUSH_MODE,
@@ -58,6 +58,9 @@ class Canvas {
 
     // once we recieve data, call this function
     this.client.on('data', d => this._recData(d))
+
+    console.log(`created canvas ${CONFIG.COLS} x ${CONFIG.ROWS}`)
+    console.log(`canvas config ${JSON.stringify(this.brush)}`)
   }
 
   /*
@@ -137,11 +140,7 @@ class Canvas {
   * Command <clear>. Clear all glyphs from grid, leaving cursor at current position.
   */
   clear(){
-    for(let i = 0; i < this.grid.length; i++){
-      for(let j = 0; j < this.grid[i].length; j++){
-        this.grid[i][j] = CONFIG.BRUSH_EMPTY
-      }
-    }
+    this.grid = {}
     return this
   }
 
@@ -160,10 +159,10 @@ class Canvas {
     // based on brush mode we are adding or erasing
     switch(this.brush.mode){
       case 'draw':
-        this.grid[this.brush.col][this.brush.row] = CONFIG.BRUSH_GLYPH
+        this.grid[this.brush.col + 'x' + this.brush.row] = CONFIG.BRUSH_GLYPH
         break;
       case 'eraser':
-        this.grid[this.brush.col][this.brush.row] = CONFIG.BRUSH_EMPTY
+        delete this.grid[this.brush.col + 'x' + this.brush.row]
       break;
     }
 
@@ -225,7 +224,7 @@ class Canvas {
     for (let row = CONFIG.ROWS - 1; row >= 0; row--) {
       this.buffer += CONFIG.FRAME.VERT
       for (let col = 0; col < CONFIG.COLS; col++) {
-        this.buffer += this.grid[col][row]
+        this.buffer += (this.grid[col + 'x' + row] ) ? this.grid[col + 'x' + row] : CONFIG.BRUSH_EMPTY
       }
       this.buffer += CONFIG.FRAME.VERT + EOL
     }
