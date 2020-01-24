@@ -73,6 +73,7 @@ class Canvas {
       this._move() // move current position of brush
       num--
     }
+    return this
   }
 
   /*
@@ -82,6 +83,7 @@ class Canvas {
   left (num = 1) {
     const rem = (this.brush.dir - parseInt(num)) % DIRECTIONS.length
     this.brush.dir = (rem >= 0) ? rem : DIRECTIONS.length + rem
+    return this
   }
 
   /*
@@ -90,6 +92,7 @@ class Canvas {
   */
   right (num = 1) {
     this.brush.dir = (parseInt(num) + this.brush.dir) % DIRECTIONS.length
+    return this
   }
 
   /*
@@ -266,6 +269,18 @@ class Canvas {
     this.buffer = this._border('bot') + EOL
     this._print()
     return this
+  }
+
+  test(){
+    this.steps(5)
+      .right(2)
+      .steps(5)
+      .right(2)
+      .steps(5)
+      .right(2)
+      .steps(5)
+      .right(2)
+      .render()
   }
 }
 
