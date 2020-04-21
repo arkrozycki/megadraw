@@ -1,3 +1,5 @@
+This was created for a take home project during candidate vetting.
+
 # MegaDraw 4000!
 
 Telnet enabled drawing program full of awe and wonder.
